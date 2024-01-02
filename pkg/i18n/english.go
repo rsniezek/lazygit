@@ -114,6 +114,8 @@ type TranslationSet struct {
 	SureSquashThisCommit                string
 	Squash                              string
 	PickCommit                          string
+	Pick                                string
+	Edit                                string
 	RevertCommit                        string
 	RewordCommit                        string
 	DeleteCommit                        string
@@ -214,6 +216,8 @@ type TranslationSet struct {
 	PickHunk                            string
 	PickAllHunks                        string
 	ViewMergeRebaseOptions              string
+	ViewMergeOptions                    string
+	ViewRebaseOptions                   string
 	NotMergingOrRebasing                string
 	AlreadyRebasing                     string
 	RecentRepos                         string
@@ -943,6 +947,8 @@ func EnglishTranslationSet() TranslationSet {
 		SureSquashThisCommit:                "Are you sure you want to squash this commit into the commit below?",
 		Squash:                              "Squash",
 		PickCommit:                          "Pick commit (when mid-rebase)",
+		Pick:                                "Pick",
+		Edit:                                "Edit",
 		RevertCommit:                        "Revert commit",
 		RewordCommit:                        "Reword commit",
 		DeleteCommit:                        "Delete commit",
@@ -1042,6 +1048,8 @@ func EnglishTranslationSet() TranslationSet {
 		ViewConflictsMenuItem:               "View conflicts",
 		AbortMenuItem:                       "Abort the %s",
 		ViewMergeRebaseOptions:              "View merge/rebase options",
+		ViewMergeOptions:                    "View merge options",
+		ViewRebaseOptions:                   "View rebase options",
 		NotMergingOrRebasing:                "You are currently neither rebasing nor merging",
 		AlreadyRebasing:                     "Can't perform this action during a rebase",
 		RecentRepos:                         "Recent repositories",

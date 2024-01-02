@@ -226,3 +226,7 @@ func (self *Views) Search() *ViewDriver {
 func (self *Views) Tooltip() *ViewDriver {
 	return self.regularView("tooltip")
 }
+
+func (self *Views) Options() *ViewDriver {
+	return self.regularView("options")
+}

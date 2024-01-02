@@ -152,6 +152,8 @@ func (gui *Gui) layout(g *gocui.Gui) error {
 		view.SelBgColor = theme.GocuiSelectedLineBgColor
 	}
 
+	gui.renderContextOptionsMap()
+
 	mainViewWidth, mainViewHeight := gui.Views.Main.Size()
 	if mainViewWidth != gui.PrevLayout.MainWidth || mainViewHeight != gui.PrevLayout.MainHeight {
 		gui.PrevLayout.MainWidth = mainViewWidth

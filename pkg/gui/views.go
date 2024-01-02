@@ -93,7 +93,6 @@ func (gui *Gui) createAllViews() error {
 		(*mapping.viewPtr).FgColor = theme.GocuiDefaultTextColor
 	}
 
-	gui.Views.Options.FgColor = theme.OptionsColor
 	gui.Views.Options.Frame = false
 
 	gui.Views.SearchPrefix.BgColor = gocui.ColorDefault
