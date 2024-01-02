@@ -8,8 +8,10 @@ import (
 	"github.com/jesseduffield/gocui"
 	"github.com/jesseduffield/lazygit/pkg/commands/models"
 	"github.com/jesseduffield/lazygit/pkg/gui/context"
+	"github.com/jesseduffield/lazygit/pkg/gui/keybindings"
 	"github.com/jesseduffield/lazygit/pkg/gui/style"
 	"github.com/jesseduffield/lazygit/pkg/gui/types"
+	"github.com/jesseduffield/lazygit/pkg/utils"
 )
 
 type SubmodulesController struct {
@@ -31,29 +33,36 @@ func NewSubmodulesController(
 func (self *SubmodulesController) GetKeybindings(opts types.KeybindingsOpts) []*types.Binding {
 	return []*types.Binding{
 		{
+			Key:         opts.GetKey(opts.Config.Universal.New),
+			Handler:     self.add,
+			Description: self.c.Tr.NewSubmodule,
+			Display:     true,
+		},
+		{
 			Key:         opts.GetKey(opts.Config.Universal.GoInto),
 			Handler:     self.checkSelected(self.enter),
-			Description: self.c.Tr.EnterSubmodule,
+			Description: self.c.Tr.Enter,
+			Tooltip: utils.ResolvePlaceholderString(self.c.Tr.EnterSubmoduleTooltip,
+				map[string]string{"escape": keybindings.Label(opts.Config.Universal.Return)}),
+			Display: true,
 		},
 		{
-			Key:         opts.GetKey(opts.Config.Universal.Select),
-			Handler:     self.checkSelected(self.enter),
-			Description: self.c.Tr.EnterSubmodule,
-		},
-		{
-			Key:         opts.GetKey(opts.Config.Universal.Remove),
-			Handler:     self.checkSelected(self.remove),
-			Description: self.c.Tr.RemoveSubmodule,
+			Key:     opts.GetKey(opts.Config.Universal.Select),
+			Handler: self.checkSelected(self.enter),
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Submodules.Update),
 			Handler:     self.checkSelected(self.update),
-			Description: self.c.Tr.SubmoduleUpdate,
+			Description: self.c.Tr.Update,
+			Tooltip:     self.c.Tr.SubmoduleUpdateTooltip,
+			Display:     true,
 		},
 		{
-			Key:         opts.GetKey(opts.Config.Universal.New),
-			Handler:     self.add,
-			Description: self.c.Tr.AddSubmodule,
+			Key:         opts.GetKey(opts.Config.Universal.Remove),
+			Handler:     self.checkSelected(self.remove),
+			Description: self.c.Tr.Remove,
+			Tooltip:     self.c.Tr.RemoveSubmoduleTooltip,
+			Display:     true,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Universal.Edit),
@@ -63,7 +72,8 @@ func (self *SubmodulesController) GetKeybindings(opts types.KeybindingsOpts) []*
 		{
 			Key:         opts.GetKey(opts.Config.Submodules.Init),
 			Handler:     self.checkSelected(self.init),
-			Description: self.c.Tr.InitSubmodule,
+			Description: self.c.Tr.Initialize,
+			Tooltip:     self.c.Tr.InitSubmoduleTooltip,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Submodules.BulkMenu),

@@ -5,7 +5,9 @@ import (
 
 	"github.com/jesseduffield/lazygit/pkg/commands/git_commands"
 	"github.com/jesseduffield/lazygit/pkg/commands/models"
+	"github.com/jesseduffield/lazygit/pkg/gui/keybindings"
 	"github.com/jesseduffield/lazygit/pkg/gui/types"
+	"github.com/jesseduffield/lazygit/pkg/utils"
 )
 
 // This controller is for all contexts that contain a list of commits.
@@ -38,13 +40,9 @@ func (self *BasicCommitsController) GetKeybindings(opts types.KeybindingsOpts) [
 		{
 			Key:         opts.GetKey(opts.Config.Commits.CheckoutCommit),
 			Handler:     self.checkSelected(self.checkout),
-			Description: self.c.Tr.CheckoutCommit,
-		},
-		{
-			Key:         opts.GetKey(opts.Config.Commits.CopyCommitAttributeToClipboard),
-			Handler:     self.checkSelected(self.copyCommitAttribute),
-			Description: self.c.Tr.CopyCommitAttributeToClipboard,
-			OpensMenu:   true,
+			Description: self.c.Tr.Checkout,
+			Tooltip:     self.c.Tr.CheckoutCommitTooltip,
+			Display:     true,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Commits.OpenInBrowser),
@@ -60,17 +58,27 @@ func (self *BasicCommitsController) GetKeybindings(opts types.KeybindingsOpts) [
 			Key:         opts.GetKey(opts.Config.Commits.ViewResetOptions),
 			Handler:     self.checkSelected(self.createResetMenu),
 			Description: self.c.Tr.ViewResetOptions,
+			Tooltip:     self.c.Tr.ResetTooltip,
 			OpensMenu:   true,
+			Display:     true,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Commits.CherryPickCopy),
 			Handler:     self.checkSelected(self.copy),
 			Description: self.c.Tr.CherryPickCopy,
+			Tooltip: utils.ResolvePlaceholderString(self.c.Tr.CherryPickCopyTooltip,
+				map[string]string{
+					"paste":  keybindings.Label(opts.Config.Commits.PasteCommits),
+					"escape": keybindings.Label(opts.Config.Universal.Return),
+				},
+			),
+			Display: true,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Commits.CherryPickCopyRange),
 			Handler:     self.checkSelected(self.copyRange),
 			Description: self.c.Tr.CherryPickCopyRange,
+			Tooltip:     self.c.Tr.CherryPickCopyRangeTooltip,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Commits.ResetCherryPick),
@@ -81,6 +89,13 @@ func (self *BasicCommitsController) GetKeybindings(opts types.KeybindingsOpts) [
 			Key:         opts.GetKey(opts.Config.Universal.OpenDiffTool),
 			Handler:     self.checkSelected(self.openDiffTool),
 			Description: self.c.Tr.OpenDiffTool,
+		},
+		{
+			Key:         opts.GetKey(opts.Config.Commits.CopyCommitAttributeToClipboard),
+			Handler:     self.checkSelected(self.copyCommitAttribute),
+			Description: self.c.Tr.CopyCommitAttributeToClipboard,
+			Tooltip:     self.c.Tr.CopyCommitAttributeToClipboardTooltip,
+			OpensMenu:   true,
 		},
 	}
 

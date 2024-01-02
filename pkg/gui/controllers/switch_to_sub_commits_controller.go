@@ -36,6 +36,7 @@ func (self *SwitchToSubCommitsController) GetKeybindings(opts types.KeybindingsO
 			Handler:     self.viewCommits,
 			Key:         opts.GetKey(opts.Config.Universal.GoInto),
 			Description: self.c.Tr.ViewCommits,
+			Display:     true,
 		},
 	}
 

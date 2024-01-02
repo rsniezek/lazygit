@@ -31,7 +31,16 @@ func (self *FilesController) GetKeybindings(opts types.KeybindingsOpts) []*types
 		{
 			Key:         opts.GetKey(opts.Config.Universal.Select),
 			Handler:     self.checkSelectedFileNode(self.press),
-			Description: self.c.Tr.ToggleStaged,
+			Description: self.c.Tr.Stage,
+			Tooltip:     self.c.Tr.StageTooltip,
+			Display:     true,
+		},
+		{
+			Key:         opts.GetKey(opts.Config.Files.ToggleStagedAll),
+			Handler:     self.toggleStagedAll,
+			Description: self.c.Tr.ToggleStagedAll,
+			Tooltip:     self.c.Tr.ToggleStagedAllTooltip,
+			Display:     true,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Files.OpenStatusFilter),
@@ -47,7 +56,9 @@ func (self *FilesController) GetKeybindings(opts types.KeybindingsOpts) []*types
 		{
 			Key:         opts.GetKey(opts.Config.Files.CommitChanges),
 			Handler:     self.c.Helpers().WorkingTree.HandleCommitPress,
-			Description: self.c.Tr.CommitChanges,
+			Description: self.c.Tr.Commit,
+			Tooltip:     self.c.Tr.CommitTooltip,
+			Display:     true,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Files.CommitChangesWithoutHook),
@@ -74,11 +85,13 @@ func (self *FilesController) GetKeybindings(opts types.KeybindingsOpts) []*types
 			Key:         opts.GetKey(opts.Config.Universal.Edit),
 			Handler:     self.checkSelectedFileNode(self.edit),
 			Description: self.c.Tr.EditFile,
+			Tooltip:     self.c.Tr.EditFileTooltip,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Universal.OpenFile),
 			Handler:     self.Open,
 			Description: self.c.Tr.OpenFile,
+			Tooltip:     self.c.Tr.OpenFileTooltip,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Files.IgnoreFile),
@@ -94,23 +107,22 @@ func (self *FilesController) GetKeybindings(opts types.KeybindingsOpts) []*types
 		{
 			Key:         opts.GetKey(opts.Config.Files.StashAllChanges),
 			Handler:     self.stash,
-			Description: self.c.Tr.StashAllChanges,
+			Description: self.c.Tr.Stash,
+			Tooltip:     self.c.Tr.StashTooltip,
+			Display:     true,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Files.ViewStashOptions),
 			Handler:     self.createStashMenu,
 			Description: self.c.Tr.ViewStashOptions,
+			Tooltip:     self.c.Tr.ViewStashOptionsTooltip,
 			OpensMenu:   true,
-		},
-		{
-			Key:         opts.GetKey(opts.Config.Files.ToggleStagedAll),
-			Handler:     self.toggleStagedAll,
-			Description: self.c.Tr.ToggleStagedAll,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Universal.GoInto),
 			Handler:     self.enter,
 			Description: self.c.Tr.FileEnter,
+			Tooltip:     self.c.Tr.FileEnterTooltip,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Commits.ViewResetOptions),
@@ -121,13 +133,16 @@ func (self *FilesController) GetKeybindings(opts types.KeybindingsOpts) []*types
 		{
 			Key:         opts.GetKey(opts.Config.Files.ViewResetOptions),
 			Handler:     self.createResetMenu,
-			Description: self.c.Tr.ViewResetOptions,
+			Description: self.c.Tr.Reset,
+			Tooltip:     self.c.Tr.FileResetOptionsTooltip,
 			OpensMenu:   true,
+			Display:     true,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Files.ToggleTreeView),
 			Handler:     self.toggleTreeView,
 			Description: self.c.Tr.ToggleTreeView,
+			Tooltip:     self.c.Tr.ToggleTreeViewTooltip,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Universal.OpenDiffTool),
@@ -138,11 +153,13 @@ func (self *FilesController) GetKeybindings(opts types.KeybindingsOpts) []*types
 			Key:         opts.GetKey(opts.Config.Files.OpenMergeTool),
 			Handler:     self.c.Helpers().WorkingTree.OpenMergeTool,
 			Description: self.c.Tr.OpenMergeTool,
+			Tooltip:     self.c.Tr.OpenMergeToolTooltip,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Files.Fetch),
 			Handler:     self.fetch,
 			Description: self.c.Tr.Fetch,
+			Tooltip:     self.c.Tr.FetchTooltip,
 		},
 	}
 }

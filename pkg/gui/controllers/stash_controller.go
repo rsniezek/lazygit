@@ -29,21 +29,28 @@ func (self *StashController) GetKeybindings(opts types.KeybindingsOpts) []*types
 			Key:         opts.GetKey(opts.Config.Universal.Select),
 			Handler:     self.checkSelected(self.handleStashApply),
 			Description: self.c.Tr.Apply,
+			Tooltip:     self.c.Tr.StashApplyTooltip,
+			Display:     true,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Stash.PopStash),
 			Handler:     self.checkSelected(self.handleStashPop),
 			Description: self.c.Tr.Pop,
+			Tooltip:     self.c.Tr.StashPopTooltip,
+			Display:     true,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Universal.Remove),
 			Handler:     self.checkSelected(self.handleStashDrop),
 			Description: self.c.Tr.Drop,
+			Tooltip:     self.c.Tr.StashDropTooltip,
+			Display:     true,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Universal.New),
 			Handler:     self.checkSelected(self.handleNewBranchOffStashEntry),
 			Description: self.c.Tr.NewBranch,
+			Tooltip:     self.c.Tr.NewBranchFromStashTooltip,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Stash.RenameStash),

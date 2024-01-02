@@ -40,14 +40,30 @@ func NewStagingController(
 func (self *StagingController) GetKeybindings(opts types.KeybindingsOpts) []*types.Binding {
 	return []*types.Binding{
 		{
+			Key:         opts.GetKey(opts.Config.Universal.Select),
+			Handler:     self.ToggleStaged,
+			Description: self.c.Tr.Stage,
+			Tooltip:     self.c.Tr.StageSelectionTooltip,
+			Display:     true,
+		},
+		{
+			Key:         opts.GetKey(opts.Config.Universal.Remove),
+			Handler:     self.DiscardSelection,
+			Description: self.c.Tr.DiscardSelection,
+			Tooltip:     self.c.Tr.DiscardSelectionTooltip,
+			Display:     true,
+		},
+		{
 			Key:         opts.GetKey(opts.Config.Universal.OpenFile),
 			Handler:     self.OpenFile,
 			Description: self.c.Tr.OpenFile,
+			Tooltip:     self.c.Tr.OpenFileTooltip,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Universal.Edit),
 			Handler:     self.EditFile,
 			Description: self.c.Tr.EditFile,
+			Tooltip:     self.c.Tr.EditFileTooltip,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Universal.Return),
@@ -57,27 +73,21 @@ func (self *StagingController) GetKeybindings(opts types.KeybindingsOpts) []*typ
 		{
 			Key:         opts.GetKey(opts.Config.Universal.TogglePanel),
 			Handler:     self.TogglePanel,
-			Description: self.c.Tr.ToggleStagingPanel,
-		},
-		{
-			Key:         opts.GetKey(opts.Config.Universal.Select),
-			Handler:     self.ToggleStaged,
-			Description: self.c.Tr.StageSelection,
-		},
-		{
-			Key:         opts.GetKey(opts.Config.Universal.Remove),
-			Handler:     self.DiscardSelection,
-			Description: self.c.Tr.DiscardSelection,
+			Description: self.c.Tr.ToggleStagingView,
+			Tooltip:     self.c.Tr.ToggleStagingViewTooltip,
+			Display:     true,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Main.EditSelectHunk),
 			Handler:     self.EditHunkAndRefresh,
 			Description: self.c.Tr.EditHunk,
+			Tooltip:     self.c.Tr.EditHunkTooltip,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Files.CommitChanges),
 			Handler:     self.c.Helpers().WorkingTree.HandleCommitPress,
-			Description: self.c.Tr.CommitChanges,
+			Description: self.c.Tr.Commit,
+			Tooltip:     self.c.Tr.CommitTooltip,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Files.CommitChangesWithoutHook),

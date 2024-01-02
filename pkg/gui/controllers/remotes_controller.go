@@ -35,28 +35,37 @@ func NewRemotesController(
 func (self *RemotesController) GetKeybindings(opts types.KeybindingsOpts) []*types.Binding {
 	bindings := []*types.Binding{
 		{
-			Key:     opts.GetKey(opts.Config.Universal.GoInto),
-			Handler: self.checkSelected(self.enter),
-		},
-		{
-			Key:         opts.GetKey(opts.Config.Branches.FetchRemote),
-			Handler:     self.checkSelected(self.fetch),
-			Description: self.c.Tr.FetchRemote,
+			Key:         opts.GetKey(opts.Config.Universal.GoInto),
+			Handler:     self.checkSelected(self.enter),
+			Description: self.c.Tr.ViewBranches,
+			Display:     true,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Universal.New),
 			Handler:     self.add,
-			Description: self.c.Tr.AddNewRemote,
-		},
-		{
-			Key:         opts.GetKey(opts.Config.Universal.Remove),
-			Handler:     self.checkSelected(self.remove),
-			Description: self.c.Tr.RemoveRemote,
+			Description: self.c.Tr.NewRemote,
+			Display:     true,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Universal.Edit),
 			Handler:     self.checkSelected(self.edit),
-			Description: self.c.Tr.EditRemote,
+			Description: self.c.Tr.Edit,
+			Tooltip:     self.c.Tr.EditRemoteTooltip,
+			Display:     true,
+		},
+		{
+			Key:         opts.GetKey(opts.Config.Universal.Remove),
+			Handler:     self.checkSelected(self.remove),
+			Description: self.c.Tr.Remove,
+			Tooltip:     self.c.Tr.RemoveRemoteTooltip,
+			Display:     true,
+		},
+		{
+			Key:         opts.GetKey(opts.Config.Branches.FetchRemote),
+			Handler:     self.checkSelected(self.fetch),
+			Description: self.c.Tr.Fetch,
+			Tooltip:     self.c.Tr.FetchRemoteTooltip,
+			Display:     true,
 		},
 	}
 

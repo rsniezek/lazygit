@@ -9,6 +9,8 @@ import (
 	"github.com/jesseduffield/lazygit/pkg/commands/types/enums"
 	"github.com/jesseduffield/lazygit/pkg/gui/context"
 	"github.com/jesseduffield/lazygit/pkg/gui/controllers/helpers"
+	"github.com/jesseduffield/lazygit/pkg/gui/keybindings"
+	"github.com/jesseduffield/lazygit/pkg/gui/style"
 	"github.com/jesseduffield/lazygit/pkg/gui/types"
 	"github.com/jesseduffield/lazygit/pkg/utils"
 	"github.com/samber/lo"
@@ -44,58 +46,88 @@ func NewLocalCommitsController(
 func (self *LocalCommitsController) GetKeybindings(opts types.KeybindingsOpts) []*types.Binding {
 	outsideFilterModeBindings := []*types.Binding{
 		{
-			Key:               opts.GetKey(opts.Config.Commits.SquashDown),
-			Handler:           self.checkSelected(self.squashDown),
-			GetDisabledReason: self.callGetDisabledReasonFuncWithSelectedCommit(self.getDisabledReasonForSquashDown),
-			Description:       self.c.Tr.SquashDown,
-		},
-		{
-			Key:               opts.GetKey(opts.Config.Commits.MarkCommitAsFixup),
-			Handler:           self.checkSelected(self.fixup),
-			GetDisabledReason: self.callGetDisabledReasonFuncWithSelectedCommit(self.getDisabledReasonForFixup),
-			Description:       self.c.Tr.FixupCommit,
-		},
-		{
-			Key:               opts.GetKey(opts.Config.Commits.RenameCommit),
-			Handler:           self.checkSelected(self.reword),
-			GetDisabledReason: self.getDisabledReasonForRebaseCommandWithSelectedCommit(todo.Reword),
-			Description:       self.c.Tr.RewordCommit,
-		},
-		{
-			Key:               opts.GetKey(opts.Config.Commits.RenameCommitWithEditor),
-			Handler:           self.checkSelected(self.rewordEditor),
-			GetDisabledReason: self.getDisabledReasonForRebaseCommandWithSelectedCommit(todo.Reword),
-			Description:       self.c.Tr.RenameCommitEditor,
+			Key:               opts.GetKey(opts.Config.Commits.PickCommit),
+			Handler:           self.checkSelected(self.pick),
+			GetDisabledReason: self.getDisabledReasonForRebaseCommandWithSelectedCommit(todo.Pick),
+			Description:       self.c.Tr.Pick,
+			Tooltip:           self.c.Tr.PickCommitTooltip,
+			// Not displaying this because we only want to display it when a TODO commit
+			// is selected. A keybinding is displayed in the options view if Display is true,
+			// and if it's not disabled, but if we disable it whenever a non-TODO commit is
+			// selected, we'll be preventing pulls from happening within the commits view
+			// (given they both use the 'p' key). Some approaches that come to mind:
+			// * Allow a disabled keybinding to conditionally fallback to a global keybinding
+			// * Allow a separate way of deciding whether a keybinding is displayed in the options view
+			Display: false,
 		},
 		{
 			Key:               opts.GetKey(opts.Config.Universal.Remove),
 			Handler:           self.checkSelected(self.drop),
 			GetDisabledReason: self.getDisabledReasonForRebaseCommandWithSelectedCommit(todo.Drop),
-			Description:       self.c.Tr.DeleteCommit,
+			Description:       self.c.Tr.DropCommit,
+			Tooltip:           self.c.Tr.DropCommitTooltip,
+			Display:           true,
 		},
 		{
 			Key:               opts.GetKey(opts.Config.Universal.Edit),
 			Handler:           self.checkSelected(self.edit),
 			GetDisabledReason: self.getDisabledReasonForRebaseCommandWithSelectedCommit(todo.Edit),
 			Description:       self.c.Tr.EditCommit,
+			ShortDescription:  self.c.Tr.Edit,
+			Tooltip:           self.c.Tr.EditCommitTooltip,
+			Display:           true,
 		},
 		{
-			Key:               opts.GetKey(opts.Config.Commits.PickCommit),
-			Handler:           self.checkSelected(self.pick),
-			GetDisabledReason: self.getDisabledReasonForRebaseCommandWithSelectedCommit(todo.Pick),
-			Description:       self.c.Tr.PickCommit,
+			Key:               opts.GetKey(opts.Config.Commits.SquashDown),
+			Handler:           self.checkSelected(self.squashDown),
+			GetDisabledReason: self.callGetDisabledReasonFuncWithSelectedCommit(self.getDisabledReasonForSquashDown),
+			Description:       self.c.Tr.Squash,
+			Tooltip:           self.c.Tr.SquashTooltip,
+			Display:           true,
+		},
+		{
+			Key:               opts.GetKey(opts.Config.Commits.MarkCommitAsFixup),
+			Handler:           self.checkSelected(self.fixup),
+			GetDisabledReason: self.callGetDisabledReasonFuncWithSelectedCommit(self.getDisabledReasonForFixup),
+			Description:       self.c.Tr.Fixup,
+			Tooltip:           self.c.Tr.FixupTooltip,
+			Display:           true,
 		},
 		{
 			Key:               opts.GetKey(opts.Config.Commits.CreateFixupCommit),
 			Handler:           self.checkSelected(self.createFixupCommit),
 			GetDisabledReason: self.disabledIfNoSelectedCommit(),
 			Description:       self.c.Tr.CreateFixupCommitDescription,
+			Tooltip: utils.ResolvePlaceholderString(
+				self.c.Tr.CreateFixupCommitTooltip,
+				map[string]string{
+					"squashAbove": keybindings.Label(opts.Config.Commits.SquashAboveCommits),
+				},
+			),
+			Display: true,
 		},
 		{
 			Key:               opts.GetKey(opts.Config.Commits.SquashAboveCommits),
 			Handler:           self.checkSelected(self.squashAllAboveFixupCommits),
 			GetDisabledReason: self.callGetDisabledReasonFuncWithSelectedCommit(self.getDisabledReasonForSquashAllAboveFixupCommits),
 			Description:       self.c.Tr.SquashAboveCommits,
+			Tooltip:           self.c.Tr.SquashAboveCommitsTooltip,
+			Display:           true,
+		},
+		{
+			Key:               opts.GetKey(opts.Config.Commits.RenameCommit),
+			Handler:           self.checkSelected(self.reword),
+			GetDisabledReason: self.getDisabledReasonForRebaseCommandWithSelectedCommit(todo.Reword),
+			Description:       self.c.Tr.Reword,
+			Tooltip:           self.c.Tr.CommitRewordTooltip,
+			Display:           true,
+			OpensMenu:         true,
+		},
+		{
+			Key:               opts.GetKey(opts.Config.Commits.RenameCommitWithEditor),
+			Handler:           self.checkSelected(self.rewordEditor),
+			GetDisabledReason: self.getDisabledReasonForRebaseCommandWithSelectedCommit(todo.Reword),
+			Description:       self.c.Tr.RewordCommitEditor,
 		},
 		{
 			Key:               opts.GetKey(opts.Config.Commits.MoveDownCommit),
@@ -114,6 +146,7 @@ func (self *LocalCommitsController) GetKeybindings(opts types.KeybindingsOpts) [
 			Handler:           self.paste,
 			GetDisabledReason: self.getDisabledReasonForPaste,
 			Description:       self.c.Tr.PasteCommits,
+			DisplayStyle:      &style.FgCyan,
 		},
 		{
 			Key:               opts.GetKey(opts.Config.Commits.MarkCommitAsBaseForRebase),
@@ -147,31 +180,39 @@ func (self *LocalCommitsController) GetKeybindings(opts types.KeybindingsOpts) [
 			Key:               opts.GetKey(opts.Config.Commits.AmendToCommit),
 			Handler:           self.checkSelected(self.amendTo),
 			GetDisabledReason: self.callGetDisabledReasonFuncWithSelectedCommit(self.getDisabledReasonForAmendTo),
-			Description:       self.c.Tr.AmendToCommit,
+			Description:       self.c.Tr.Amend,
+			Tooltip:           self.c.Tr.AmendCommitTooltip,
+			Display:           true,
 		},
 		{
 			Key:               opts.GetKey(opts.Config.Commits.ResetCommitAuthor),
 			Handler:           self.checkSelected(self.amendAttribute),
 			GetDisabledReason: self.callGetDisabledReasonFuncWithSelectedCommit(self.getDisabledReasonForAmendTo),
-			Description:       self.c.Tr.SetResetCommitAuthor,
+			Description:       self.c.Tr.AmendCommitAttribute,
+			Tooltip:           self.c.Tr.AmendCommitAttributeTooltip,
 			OpensMenu:         true,
 		},
 		{
 			Key:               opts.GetKey(opts.Config.Commits.RevertCommit),
 			Handler:           self.checkSelected(self.revert),
 			GetDisabledReason: self.disabledIfNoSelectedCommit(),
-			Description:       self.c.Tr.RevertCommit,
+			Description:       self.c.Tr.Revert,
+			Tooltip:           self.c.Tr.RevertCommitTooltip,
+			Display:           true,
 		},
 		{
 			Key:               opts.GetKey(opts.Config.Commits.CreateTag),
 			Handler:           self.checkSelected(self.createTag),
 			GetDisabledReason: self.disabledIfNoSelectedCommit(),
 			Description:       self.c.Tr.TagCommit,
+			Tooltip:           self.c.Tr.TagCommitTooltip,
+			Display:           true,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Commits.OpenLogMenu),
 			Handler:     self.handleOpenLogMenu,
 			Description: self.c.Tr.OpenLogMenu,
+			Tooltip:     self.c.Tr.OpenLogMenuTooltip,
 			OpensMenu:   true,
 		},
 	}...)
@@ -483,7 +524,8 @@ func (self *LocalCommitsController) rebaseCommandEnabled(action todo.TodoCommand
 	}
 
 	if !commit.IsTODO() {
-		if self.c.Git().Status.WorkingTreeState() != enums.REBASE_MODE_NONE {
+		isRebasing := self.c.Model().WorkingTreeStateAtLastCommitRefresh != enums.REBASE_MODE_NONE
+		if isRebasing {
 			// If we are in a rebase, the only action that is allowed for
 			// non-todo commits is rewording the current head commit
 			if !(action == todo.Reword && self.isHeadCommit()) {
@@ -807,7 +849,7 @@ func (self *LocalCommitsController) squashAllAboveFixupCommits(commit *models.Co
 	)
 
 	return self.c.Confirm(types.ConfirmOpts{
-		Title:  self.c.Tr.SquashAboveCommits,
+		Title:  self.c.Tr.SquashAboveCommitsTooltip,
 		Prompt: prompt,
 		HandleConfirm: func() error {
 			return self.c.WithWaitingStatus(self.c.Tr.SquashingStatus, func(gocui.Task) error {

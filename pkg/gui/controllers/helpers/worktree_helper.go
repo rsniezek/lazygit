@@ -157,7 +157,7 @@ func (self *WorktreeHelper) Switch(worktree *models.Worktree, contextKey types.C
 		return self.c.ErrorMsg(self.c.Tr.AlreadyInWorktree)
 	}
 
-	self.c.LogAction(self.c.Tr.SwitchToWorktree)
+	self.c.LogAction(self.c.Tr.Switch)
 
 	return self.reposHelper.DispatchSwitchTo(worktree.Path, self.c.Tr.ErrWorktreeMovedOrRemoved, contextKey)
 }

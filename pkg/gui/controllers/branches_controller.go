@@ -38,11 +38,14 @@ func (self *BranchesController) GetKeybindings(opts types.KeybindingsOpts) []*ty
 			Handler:           self.checkSelected(self.press),
 			GetDisabledReason: self.getDisabledReasonForPress,
 			Description:       self.c.Tr.Checkout,
+			Tooltip:           self.c.Tr.CheckoutTooltip,
+			Display:           true,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Universal.New),
 			Handler:     self.checkSelected(self.newBranch),
 			Description: self.c.Tr.NewBranch,
+			Display:     true,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Branches.CreatePullRequest),
@@ -64,38 +67,47 @@ func (self *BranchesController) GetKeybindings(opts types.KeybindingsOpts) []*ty
 			Key:         opts.GetKey(opts.Config.Branches.CheckoutBranchByName),
 			Handler:     self.checkoutByName,
 			Description: self.c.Tr.CheckoutByName,
+			Tooltip:     self.c.Tr.CheckoutByNameTooltip,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Branches.ForceCheckoutBranch),
 			Handler:     self.forceCheckout,
 			Description: self.c.Tr.ForceCheckout,
+			Tooltip:     self.c.Tr.ForceCheckoutTooltip,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Universal.Remove),
 			Handler:     self.checkSelectedAndReal(self.delete),
-			Description: self.c.Tr.ViewDeleteOptions,
+			Description: self.c.Tr.Delete,
+			Tooltip:     self.c.Tr.BranchDeleteTooltip,
 			OpensMenu:   true,
+			Display:     true,
 		},
 		{
 			Key:               opts.GetKey(opts.Config.Branches.RebaseBranch),
 			Handler:           opts.Guards.OutsideFilterMode(self.rebase),
 			Description:       self.c.Tr.RebaseBranch,
+			Tooltip:           self.c.Tr.RebaseBranchTooltip,
 			GetDisabledReason: self.getDisabledReasonForRebase,
+			Display:           true,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Branches.MergeIntoCurrentBranch),
 			Handler:     opts.Guards.OutsideFilterMode(self.merge),
-			Description: self.c.Tr.MergeIntoCurrentBranch,
+			Description: self.c.Tr.Merge,
+			Tooltip:     self.c.Tr.MergeBranchTooltip,
+			Display:     true,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Branches.FastForward),
 			Handler:     self.checkSelectedAndReal(self.fastForward),
 			Description: self.c.Tr.FastForward,
+			Tooltip:     self.c.Tr.FastForwardTooltip,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Branches.CreateTag),
 			Handler:     self.checkSelected(self.createTag),
-			Description: self.c.Tr.CreateTag,
+			Description: self.c.Tr.NewTag,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Branches.SortOrder),
@@ -106,8 +118,10 @@ func (self *BranchesController) GetKeybindings(opts types.KeybindingsOpts) []*ty
 		{
 			Key:         opts.GetKey(opts.Config.Commits.ViewResetOptions),
 			Handler:     self.checkSelected(self.createResetMenu),
-			Description: self.c.Tr.ViewResetOptions,
+			Description: self.c.Tr.Reset,
+			Tooltip:     self.c.Tr.ResetTooltip,
 			OpensMenu:   true,
+			Display:     true,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Branches.RenameBranch),
@@ -117,9 +131,10 @@ func (self *BranchesController) GetKeybindings(opts types.KeybindingsOpts) []*ty
 		{
 			Key:         opts.GetKey(opts.Config.Branches.SetUpstream),
 			Handler:     self.checkSelected(self.viewUpstreamOptions),
-			Description: self.c.Tr.ViewBranchUpstreamOptions,
+			Description: self.c.Tr.Upstream,
 			Tooltip:     self.c.Tr.ViewBranchUpstreamOptionsTooltip,
 			OpensMenu:   true,
+			Display:     true,
 		},
 	}
 }
@@ -331,7 +346,7 @@ func (self *BranchesController) promptToCheckoutWorktree(worktree *models.Worktr
 	})
 
 	return self.c.Confirm(types.ConfirmOpts{
-		Title:  self.c.Tr.SwitchToWorktree,
+		Title:  self.c.Tr.Switch,
 		Prompt: prompt,
 		HandleConfirm: func() error {
 			return self.c.Helpers().Worktree.Switch(worktree, context.LOCAL_BRANCHES_CONTEXT_KEY)
@@ -449,7 +464,7 @@ func (self *BranchesController) promptWorktreeBranchDelete(selectedBranch *model
 		Title: title,
 		Items: []*types.MenuItem{
 			{
-				Label: self.c.Tr.SwitchToWorktree,
+				Label: self.c.Tr.Switch,
 				OnPress: func() error {
 					return self.c.Helpers().Worktree.Switch(worktree, context.LOCAL_BRANCHES_CONTEXT_KEY)
 				},

@@ -5,9 +5,11 @@ import (
 	"github.com/jesseduffield/lazygit/pkg/commands/git_commands"
 	"github.com/jesseduffield/lazygit/pkg/commands/models"
 	"github.com/jesseduffield/lazygit/pkg/commands/patch"
+	"github.com/jesseduffield/lazygit/pkg/constants"
 	"github.com/jesseduffield/lazygit/pkg/gui/context"
 	"github.com/jesseduffield/lazygit/pkg/gui/filetree"
 	"github.com/jesseduffield/lazygit/pkg/gui/types"
+	"github.com/jesseduffield/lazygit/pkg/utils"
 )
 
 type CommitFilesController struct {
@@ -31,22 +33,29 @@ func (self *CommitFilesController) GetKeybindings(opts types.KeybindingsOpts) []
 		{
 			Key:         opts.GetKey(opts.Config.CommitFiles.CheckoutCommitFile),
 			Handler:     self.checkSelected(self.checkout),
-			Description: self.c.Tr.CheckoutCommitFile,
+			Description: self.c.Tr.Checkout,
+			Tooltip:     self.c.Tr.CheckoutCommitFileTooltip,
+			Display:     true,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Universal.Remove),
 			Handler:     self.checkSelected(self.discard),
-			Description: self.c.Tr.DiscardOldFileChange,
+			Description: self.c.Tr.Remove,
+			Tooltip:     self.c.Tr.DiscardOldFileChangeTooltip,
+			Display:     true,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Universal.OpenFile),
 			Handler:     self.checkSelected(self.open),
 			Description: self.c.Tr.OpenFile,
+			Tooltip:     self.c.Tr.OpenFileTooltip,
+			Display:     true,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Universal.Edit),
 			Handler:     self.checkSelected(self.edit),
 			Description: self.c.Tr.EditFile,
+			Tooltip:     self.c.Tr.EditFileTooltip,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Universal.OpenDiffTool),
@@ -57,21 +66,30 @@ func (self *CommitFilesController) GetKeybindings(opts types.KeybindingsOpts) []
 			Key:         opts.GetKey(opts.Config.Universal.Select),
 			Handler:     self.checkSelected(self.toggleForPatch),
 			Description: self.c.Tr.ToggleAddToPatch,
+			Tooltip: utils.ResolvePlaceholderString(self.c.Tr.ToggleAddToPatchTooltip,
+				map[string]string{"doc": constants.Links.Docs.CustomPatchDemo},
+			),
+			Display: true,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Files.ToggleStagedAll),
 			Handler:     self.checkSelected(self.toggleAllForPatch),
 			Description: self.c.Tr.ToggleAllInPatch,
+			Tooltip: utils.ResolvePlaceholderString(self.c.Tr.ToggleAllInPatchTooltip,
+				map[string]string{"doc": constants.Links.Docs.CustomPatchDemo},
+			),
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Universal.GoInto),
 			Handler:     self.checkSelected(self.enter),
-			Description: self.c.Tr.EnterFile,
+			Description: self.c.Tr.EnterCommitFile,
+			Tooltip:     self.c.Tr.EnterCommitFileTooltip,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Files.ToggleTreeView),
 			Handler:     self.toggleTreeView,
 			Description: self.c.Tr.ToggleTreeView,
+			Tooltip:     self.c.Tr.ToggleTreeViewTooltip,
 		},
 	}
 

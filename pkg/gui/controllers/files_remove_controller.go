@@ -32,7 +32,9 @@ func (self *FilesRemoveController) GetKeybindings(opts types.KeybindingsOpts) []
 		{
 			Key:         opts.GetKey(opts.Config.Universal.Remove),
 			Handler:     self.checkSelectedFileNode(self.remove),
-			Description: self.c.Tr.ViewDiscardOptions,
+			Description: self.c.Tr.Discard,
+			Tooltip:     self.c.Tr.DiscardFileChangesTooltip,
+			Display:     true,
 			OpensMenu:   true,
 		},
 	}
