@@ -69,8 +69,10 @@ func (self *GlobalController) GetKeybindings(opts types.KeybindingsOpts) []*type
 			Modifier: gocui.ModNone,
 			// we have the description on the alt key and not the main key for legacy reasons
 			// (the original main key was 'x' but we've reassigned that to other purposes)
-			Description: self.c.Tr.OpenKeybindingsMenu,
-			Handler:     self.createOptionsMenu,
+			Description:      self.c.Tr.OpenKeybindingsMenu,
+			Handler:          self.createOptionsMenu,
+			ShortDescription: self.c.Tr.Keybindings,
+			Display:          true,
 		},
 		{
 			ViewName:    "",
@@ -98,6 +100,7 @@ func (self *GlobalController) GetKeybindings(opts types.KeybindingsOpts) []*type
 			Key:         opts.GetKey(opts.Config.Universal.Quit),
 			Modifier:    gocui.ModNone,
 			Description: self.c.Tr.Quit,
+			Display:     true,
 			Handler:     self.quit,
 		},
 		{
@@ -111,9 +114,11 @@ func (self *GlobalController) GetKeybindings(opts types.KeybindingsOpts) []*type
 			Handler:  self.quitWithoutChangingDirectory,
 		},
 		{
-			Key:      opts.GetKey(opts.Config.Universal.Return),
-			Modifier: gocui.ModNone,
-			Handler:  self.escape,
+			Key:              opts.GetKey(opts.Config.Universal.Return),
+			Modifier:         gocui.ModNone,
+			Handler:          self.escape,
+			ShortDescription: self.c.Tr.Cancel,
+			Display:          true,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Universal.ToggleWhitespaceInDiffView),

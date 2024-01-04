@@ -1,7 +1,6 @@
 package gui
 
 import (
-	"fmt"
 	"strings"
 
 	"github.com/jesseduffield/lazygit/pkg/gui/context"
@@ -35,8 +34,13 @@ func (gui *Gui) renderContextOptionsMap() {
 func (self *OptionsMapMgr) renderContextOptionsMap() {
 	currentContext := self.c.CurrentContext()
 
-	bindingsToDisplay := lo.Filter(currentContext.GetKeybindings(self.c.KeybindingsOpts()), func(binding *types.Binding, _ int) bool {
-		return binding.Display && (binding.GetDisabledReason == nil || binding.GetDisabledReason() == "")
+	currentContextBindings := currentContext.GetKeybindings(self.c.KeybindingsOpts())
+	globalBindings := self.c.Contexts().Global.GetKeybindings(self.c.KeybindingsOpts())
+
+	allBindings := append(currentContextBindings, globalBindings...)
+
+	bindingsToDisplay := lo.Filter(allBindings, func(binding *types.Binding, _ int) bool {
+		return binding.Display && !binding.IsDisabled()
 	})
 
 	optionsMap := lo.Map(bindingsToDisplay, func(binding *types.Binding, _ int) bindingInfo {
@@ -56,8 +60,6 @@ func (self *OptionsMapMgr) renderContextOptionsMap() {
 			style:       displayStyle,
 		}
 	})
-
-	optionsMap = append(optionsMap, self.globalOptions()...)
 
 	// Mode-specific local keybindings
 	if currentContext.GetKey() == context.LOCAL_COMMITS_CONTEXT_KEY {
@@ -114,35 +116,6 @@ func (self *OptionsMapMgr) formatBindingInfos(bindingInfos []bindingInfo) string
 
 func (self *OptionsMapMgr) renderOptions(options string) {
 	self.c.SetViewContent(self.c.Views().Options, options)
-}
-
-func (self *OptionsMapMgr) globalOptions() []bindingInfo {
-	keybindingConfig := self.c.UserConfig.Keybinding
-
-	style := theme.OptionsFgColor
-
-	return []bindingInfo{
-		{
-			key:         keybindings.Label(keybindingConfig.Universal.OptionMenuAlt1),
-			description: self.c.Tr.Keybindings,
-			style:       style,
-		},
-		{
-			key:         keybindings.Label(keybindingConfig.Universal.Return),
-			description: self.c.Tr.Cancel,
-			style:       style,
-		},
-		{
-			key:         keybindings.Label(keybindingConfig.Universal.Quit),
-			description: self.c.Tr.Quit,
-			style:       style,
-		},
-		{
-			key:         fmt.Sprintf("%s/%s", keybindings.Label(keybindingConfig.Universal.ScrollUpMain), keybindings.Label(keybindingConfig.Universal.ScrollDownMain)),
-			description: self.c.Tr.Scroll,
-			style:       style,
-		},
-	}
 }
 
 type bindingInfo struct {
