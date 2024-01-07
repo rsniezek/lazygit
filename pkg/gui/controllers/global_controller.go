@@ -72,7 +72,7 @@ func (self *GlobalController) GetKeybindings(opts types.KeybindingsOpts) []*type
 			Description:      self.c.Tr.OpenKeybindingsMenu,
 			Handler:          self.createOptionsMenu,
 			ShortDescription: self.c.Tr.Keybindings,
-			Display:          true,
+			DisplayOnscreen:  true,
 		},
 		{
 			ViewName:    "",
@@ -97,11 +97,11 @@ func (self *GlobalController) GetKeybindings(opts types.KeybindingsOpts) []*type
 			OpensMenu:   true,
 		},
 		{
-			Key:         opts.GetKey(opts.Config.Universal.Quit),
-			Modifier:    gocui.ModNone,
-			Description: self.c.Tr.Quit,
-			Display:     true,
-			Handler:     self.quit,
+			Key:             opts.GetKey(opts.Config.Universal.Quit),
+			Modifier:        gocui.ModNone,
+			Description:     self.c.Tr.Quit,
+			DisplayOnscreen: true,
+			Handler:         self.quit,
 		},
 		{
 			Key:      opts.GetKey(opts.Config.Universal.QuitAlt1),
@@ -118,7 +118,7 @@ func (self *GlobalController) GetKeybindings(opts types.KeybindingsOpts) []*type
 			Modifier:         gocui.ModNone,
 			Handler:          self.escape,
 			ShortDescription: self.c.Tr.Cancel,
-			Display:          true,
+			DisplayOnscreen:  true,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Universal.ToggleWhitespaceInDiffView),

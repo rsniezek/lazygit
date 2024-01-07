@@ -36,7 +36,7 @@ func (self *SyncController) GetKeybindings(opts types.KeybindingsOpts) []*types.
 			GetDisabledReason: self.getDisabledReasonForPushOrPull,
 			Description:       self.c.Tr.Push,
 			Tooltip:           self.c.Tr.PushTooltip,
-			Display:           true,
+			DisplayOnscreen:   true,
 		},
 		{
 			Key:               opts.GetKey(opts.Config.Universal.Pull),
@@ -44,7 +44,7 @@ func (self *SyncController) GetKeybindings(opts types.KeybindingsOpts) []*types.
 			GetDisabledReason: self.getDisabledReasonForPushOrPull,
 			Description:       self.c.Tr.Pull,
 			Tooltip:           self.c.Tr.PullTooltip,
-			Display:           true,
+			DisplayOnscreen:   true,
 		},
 	}
 

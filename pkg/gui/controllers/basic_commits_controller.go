@@ -38,11 +38,11 @@ func NewBasicCommitsController(controllerCommon *ControllerCommon, context Conta
 func (self *BasicCommitsController) GetKeybindings(opts types.KeybindingsOpts) []*types.Binding {
 	bindings := []*types.Binding{
 		{
-			Key:         opts.GetKey(opts.Config.Commits.CheckoutCommit),
-			Handler:     self.checkSelected(self.checkout),
-			Description: self.c.Tr.Checkout,
-			Tooltip:     self.c.Tr.CheckoutCommitTooltip,
-			Display:     true,
+			Key:             opts.GetKey(opts.Config.Commits.CheckoutCommit),
+			Handler:         self.checkSelected(self.checkout),
+			Description:     self.c.Tr.Checkout,
+			Tooltip:         self.c.Tr.CheckoutCommitTooltip,
+			DisplayOnscreen: true,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Commits.OpenInBrowser),
@@ -55,12 +55,12 @@ func (self *BasicCommitsController) GetKeybindings(opts types.KeybindingsOpts) [
 			Description: self.c.Tr.CreateNewBranchFromCommit,
 		},
 		{
-			Key:         opts.GetKey(opts.Config.Commits.ViewResetOptions),
-			Handler:     self.checkSelected(self.createResetMenu),
-			Description: self.c.Tr.ViewResetOptions,
-			Tooltip:     self.c.Tr.ResetTooltip,
-			OpensMenu:   true,
-			Display:     true,
+			Key:             opts.GetKey(opts.Config.Commits.ViewResetOptions),
+			Handler:         self.checkSelected(self.createResetMenu),
+			Description:     self.c.Tr.ViewResetOptions,
+			Tooltip:         self.c.Tr.ResetTooltip,
+			OpensMenu:       true,
+			DisplayOnscreen: true,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Commits.CherryPickCopy),
@@ -72,7 +72,7 @@ func (self *BasicCommitsController) GetKeybindings(opts types.KeybindingsOpts) [
 					"escape": keybindings.Label(opts.Config.Universal.Return),
 				},
 			),
-			Display: true,
+			DisplayOnscreen: true,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Commits.CherryPickCopyRange),

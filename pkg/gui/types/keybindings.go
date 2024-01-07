@@ -27,8 +27,9 @@ type Binding struct {
 	// Even if set to true, the keybinding will not be displayed if it is currently
 	// disabled. We could instead display it with a strikethrough, but there's
 	// limited realestate to show all the keybindings we want, so we're hiding it instead.
-	Display bool
-	// if unset, the binding will be displayed in the default color
+	DisplayOnscreen bool
+	// if unset, the binding will be displayed in the default color. Only applies to the keybinding
+	// on-screen, not in the keybindings menu.
 	DisplayStyle *style.TextStyle
 
 	// to be displayed if the keybinding is highlighted from within a menu

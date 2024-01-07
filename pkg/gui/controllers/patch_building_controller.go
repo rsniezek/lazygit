@@ -37,10 +37,10 @@ func (self *PatchBuildingController) GetKeybindings(opts types.KeybindingsOpts) 
 			Tooltip:     self.c.Tr.EditFileTooltip,
 		},
 		{
-			Key:         opts.GetKey(opts.Config.Universal.Select),
-			Handler:     self.ToggleSelectionAndRefresh,
-			Description: self.c.Tr.ToggleSelectionForPatch,
-			Display:     true,
+			Key:             opts.GetKey(opts.Config.Universal.Select),
+			Handler:         self.ToggleSelectionAndRefresh,
+			Description:     self.c.Tr.ToggleSelectionForPatch,
+			DisplayOnscreen: true,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Universal.Return),

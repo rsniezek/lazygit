@@ -33,10 +33,10 @@ func NewSubmodulesController(
 func (self *SubmodulesController) GetKeybindings(opts types.KeybindingsOpts) []*types.Binding {
 	return []*types.Binding{
 		{
-			Key:         opts.GetKey(opts.Config.Universal.New),
-			Handler:     self.add,
-			Description: self.c.Tr.NewSubmodule,
-			Display:     true,
+			Key:             opts.GetKey(opts.Config.Universal.New),
+			Handler:         self.add,
+			Description:     self.c.Tr.NewSubmodule,
+			DisplayOnscreen: true,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Universal.GoInto),
@@ -44,25 +44,25 @@ func (self *SubmodulesController) GetKeybindings(opts types.KeybindingsOpts) []*
 			Description: self.c.Tr.Enter,
 			Tooltip: utils.ResolvePlaceholderString(self.c.Tr.EnterSubmoduleTooltip,
 				map[string]string{"escape": keybindings.Label(opts.Config.Universal.Return)}),
-			Display: true,
+			DisplayOnscreen: true,
 		},
 		{
 			Key:     opts.GetKey(opts.Config.Universal.Select),
 			Handler: self.checkSelected(self.enter),
 		},
 		{
-			Key:         opts.GetKey(opts.Config.Submodules.Update),
-			Handler:     self.checkSelected(self.update),
-			Description: self.c.Tr.Update,
-			Tooltip:     self.c.Tr.SubmoduleUpdateTooltip,
-			Display:     true,
+			Key:             opts.GetKey(opts.Config.Submodules.Update),
+			Handler:         self.checkSelected(self.update),
+			Description:     self.c.Tr.Update,
+			Tooltip:         self.c.Tr.SubmoduleUpdateTooltip,
+			DisplayOnscreen: true,
 		},
 		{
-			Key:         opts.GetKey(opts.Config.Universal.Remove),
-			Handler:     self.checkSelected(self.remove),
-			Description: self.c.Tr.Remove,
-			Tooltip:     self.c.Tr.RemoveSubmoduleTooltip,
-			Display:     true,
+			Key:             opts.GetKey(opts.Config.Universal.Remove),
+			Handler:         self.checkSelected(self.remove),
+			Description:     self.c.Tr.Remove,
+			Tooltip:         self.c.Tr.RemoveSubmoduleTooltip,
+			DisplayOnscreen: true,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Universal.Edit),

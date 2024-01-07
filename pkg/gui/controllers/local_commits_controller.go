@@ -58,7 +58,7 @@ func (self *LocalCommitsController) GetKeybindings(opts types.KeybindingsOpts) [
 			// (given they both use the 'p' key). Some approaches that come to mind:
 			// * Allow a disabled keybinding to conditionally fallback to a global keybinding
 			// * Allow a separate way of deciding whether a keybinding is displayed in the options view
-			Display: false,
+			DisplayOnscreen: false,
 		},
 		{
 			Key:               opts.GetKey(opts.Config.Universal.Remove),
@@ -66,7 +66,7 @@ func (self *LocalCommitsController) GetKeybindings(opts types.KeybindingsOpts) [
 			GetDisabledReason: self.getDisabledReasonForRebaseCommandWithSelectedCommit(todo.Drop),
 			Description:       self.c.Tr.DropCommit,
 			Tooltip:           self.c.Tr.DropCommitTooltip,
-			Display:           true,
+			DisplayOnscreen:   true,
 		},
 		{
 			Key:               opts.GetKey(opts.Config.Universal.Edit),
@@ -75,7 +75,7 @@ func (self *LocalCommitsController) GetKeybindings(opts types.KeybindingsOpts) [
 			Description:       self.c.Tr.EditCommit,
 			ShortDescription:  self.c.Tr.Edit,
 			Tooltip:           self.c.Tr.EditCommitTooltip,
-			Display:           true,
+			DisplayOnscreen:   true,
 		},
 		{
 			Key:               opts.GetKey(opts.Config.Commits.SquashDown),
@@ -83,7 +83,7 @@ func (self *LocalCommitsController) GetKeybindings(opts types.KeybindingsOpts) [
 			GetDisabledReason: self.callGetDisabledReasonFuncWithSelectedCommit(self.getDisabledReasonForSquashDown),
 			Description:       self.c.Tr.Squash,
 			Tooltip:           self.c.Tr.SquashTooltip,
-			Display:           true,
+			DisplayOnscreen:   true,
 		},
 		{
 			Key:               opts.GetKey(opts.Config.Commits.MarkCommitAsFixup),
@@ -91,7 +91,7 @@ func (self *LocalCommitsController) GetKeybindings(opts types.KeybindingsOpts) [
 			GetDisabledReason: self.callGetDisabledReasonFuncWithSelectedCommit(self.getDisabledReasonForFixup),
 			Description:       self.c.Tr.Fixup,
 			Tooltip:           self.c.Tr.FixupTooltip,
-			Display:           true,
+			DisplayOnscreen:   true,
 		},
 		{
 			Key:               opts.GetKey(opts.Config.Commits.CreateFixupCommit),
@@ -104,7 +104,7 @@ func (self *LocalCommitsController) GetKeybindings(opts types.KeybindingsOpts) [
 					"squashAbove": keybindings.Label(opts.Config.Commits.SquashAboveCommits),
 				},
 			),
-			Display: true,
+			DisplayOnscreen: true,
 		},
 		{
 			Key:               opts.GetKey(opts.Config.Commits.SquashAboveCommits),
@@ -112,7 +112,7 @@ func (self *LocalCommitsController) GetKeybindings(opts types.KeybindingsOpts) [
 			GetDisabledReason: self.callGetDisabledReasonFuncWithSelectedCommit(self.getDisabledReasonForSquashAllAboveFixupCommits),
 			Description:       self.c.Tr.SquashAboveCommits,
 			Tooltip:           self.c.Tr.SquashAboveCommitsTooltip,
-			Display:           true,
+			DisplayOnscreen:   true,
 		},
 		{
 			Key:               opts.GetKey(opts.Config.Commits.RenameCommit),
@@ -120,7 +120,7 @@ func (self *LocalCommitsController) GetKeybindings(opts types.KeybindingsOpts) [
 			GetDisabledReason: self.getDisabledReasonForRebaseCommandWithSelectedCommit(todo.Reword),
 			Description:       self.c.Tr.Reword,
 			Tooltip:           self.c.Tr.CommitRewordTooltip,
-			Display:           true,
+			DisplayOnscreen:   true,
 			OpensMenu:         true,
 		},
 		{
@@ -182,7 +182,7 @@ func (self *LocalCommitsController) GetKeybindings(opts types.KeybindingsOpts) [
 			GetDisabledReason: self.callGetDisabledReasonFuncWithSelectedCommit(self.getDisabledReasonForAmendTo),
 			Description:       self.c.Tr.Amend,
 			Tooltip:           self.c.Tr.AmendCommitTooltip,
-			Display:           true,
+			DisplayOnscreen:   true,
 		},
 		{
 			Key:               opts.GetKey(opts.Config.Commits.ResetCommitAuthor),
@@ -198,7 +198,7 @@ func (self *LocalCommitsController) GetKeybindings(opts types.KeybindingsOpts) [
 			GetDisabledReason: self.disabledIfNoSelectedCommit(),
 			Description:       self.c.Tr.Revert,
 			Tooltip:           self.c.Tr.RevertCommitTooltip,
-			Display:           true,
+			DisplayOnscreen:   true,
 		},
 		{
 			Key:               opts.GetKey(opts.Config.Commits.CreateTag),
@@ -206,7 +206,7 @@ func (self *LocalCommitsController) GetKeybindings(opts types.KeybindingsOpts) [
 			GetDisabledReason: self.disabledIfNoSelectedCommit(),
 			Description:       self.c.Tr.TagCommit,
 			Tooltip:           self.c.Tr.TagCommitTooltip,
-			Display:           true,
+			DisplayOnscreen:   true,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Commits.OpenLogMenu),

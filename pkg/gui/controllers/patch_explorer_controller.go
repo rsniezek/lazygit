@@ -75,11 +75,11 @@ func (self *PatchExplorerController) GetKeybindings(opts types.KeybindingsOpts) 
 			Handler: self.withRenderAndFocus(self.HandleNextHunk),
 		},
 		{
-			Key:         opts.GetKey(opts.Config.Main.ToggleDragSelect),
-			Handler:     self.withRenderAndFocus(self.HandleToggleSelectRange),
-			Description: self.c.Tr.ToggleDragSelect,
-			Tooltip:     self.c.Tr.ToggleDragSelectTooltip,
-			Display:     true,
+			Key:             opts.GetKey(opts.Config.Main.ToggleDragSelect),
+			Handler:         self.withRenderAndFocus(self.HandleToggleSelectRange),
+			Description:     self.c.Tr.ToggleDragSelect,
+			Tooltip:         self.c.Tr.ToggleDragSelectTooltip,
+			DisplayOnscreen: true,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Main.ToggleDragSelectAlt),
@@ -87,11 +87,11 @@ func (self *PatchExplorerController) GetKeybindings(opts types.KeybindingsOpts) 
 			Description: self.c.Tr.ToggleDragSelect,
 		},
 		{
-			Key:         opts.GetKey(opts.Config.Main.ToggleSelectHunk),
-			Handler:     self.withRenderAndFocus(self.HandleToggleSelectHunk),
-			Description: self.c.Tr.ToggleSelectHunk,
-			Tooltip:     self.c.Tr.ToggleSelectHunkTooltip,
-			Display:     true,
+			Key:             opts.GetKey(opts.Config.Main.ToggleSelectHunk),
+			Handler:         self.withRenderAndFocus(self.HandleToggleSelectHunk),
+			Description:     self.c.Tr.ToggleSelectHunk,
+			Tooltip:         self.c.Tr.ToggleSelectHunkTooltip,
+			DisplayOnscreen: true,
 		},
 		{
 			Tag:         "navigation",

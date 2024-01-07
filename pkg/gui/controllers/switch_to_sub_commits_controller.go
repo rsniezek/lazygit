@@ -33,10 +33,10 @@ func NewSwitchToSubCommitsController(
 func (self *SwitchToSubCommitsController) GetKeybindings(opts types.KeybindingsOpts) []*types.Binding {
 	bindings := []*types.Binding{
 		{
-			Handler:     self.viewCommits,
-			Key:         opts.GetKey(opts.Config.Universal.GoInto),
-			Description: self.c.Tr.ViewCommits,
-			Display:     true,
+			Handler:         self.viewCommits,
+			Key:             opts.GetKey(opts.Config.Universal.GoInto),
+			Description:     self.c.Tr.ViewCommits,
+			DisplayOnscreen: true,
 		},
 	}
 

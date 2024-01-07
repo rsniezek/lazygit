@@ -30,12 +30,12 @@ func NewFilesRemoveController(
 func (self *FilesRemoveController) GetKeybindings(opts types.KeybindingsOpts) []*types.Binding {
 	bindings := []*types.Binding{
 		{
-			Key:         opts.GetKey(opts.Config.Universal.Remove),
-			Handler:     self.checkSelectedFileNode(self.remove),
-			Description: self.c.Tr.Discard,
-			Tooltip:     self.c.Tr.DiscardFileChangesTooltip,
-			Display:     true,
-			OpensMenu:   true,
+			Key:             opts.GetKey(opts.Config.Universal.Remove),
+			Handler:         self.checkSelectedFileNode(self.remove),
+			Description:     self.c.Tr.Discard,
+			Tooltip:         self.c.Tr.DiscardFileChangesTooltip,
+			DisplayOnscreen: true,
+			OpensMenu:       true,
 		},
 	}
 

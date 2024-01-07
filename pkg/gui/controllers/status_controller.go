@@ -33,24 +33,24 @@ func NewStatusController(
 func (self *StatusController) GetKeybindings(opts types.KeybindingsOpts) []*types.Binding {
 	bindings := []*types.Binding{
 		{
-			Key:         opts.GetKey(opts.Config.Universal.OpenFile),
-			Handler:     self.openConfig,
-			Description: self.c.Tr.OpenConfig,
-			Tooltip:     self.c.Tr.OpenFileTooltip,
-			Display:     true,
+			Key:             opts.GetKey(opts.Config.Universal.OpenFile),
+			Handler:         self.openConfig,
+			Description:     self.c.Tr.OpenConfig,
+			Tooltip:         self.c.Tr.OpenFileTooltip,
+			DisplayOnscreen: true,
 		},
 		{
-			Key:         opts.GetKey(opts.Config.Universal.Edit),
-			Handler:     self.editConfig,
-			Description: self.c.Tr.EditConfig,
-			Tooltip:     self.c.Tr.EditFileTooltip,
-			Display:     true,
+			Key:             opts.GetKey(opts.Config.Universal.Edit),
+			Handler:         self.editConfig,
+			Description:     self.c.Tr.EditConfig,
+			Tooltip:         self.c.Tr.EditFileTooltip,
+			DisplayOnscreen: true,
 		},
 		{
-			Key:         opts.GetKey(opts.Config.Status.CheckForUpdate),
-			Handler:     self.handleCheckForUpdate,
-			Description: self.c.Tr.CheckForUpdate,
-			Display:     true,
+			Key:             opts.GetKey(opts.Config.Status.CheckForUpdate),
+			Handler:         self.handleCheckForUpdate,
+			Description:     self.c.Tr.CheckForUpdate,
+			DisplayOnscreen: true,
 		},
 		{
 			Key:         opts.GetKey(opts.Config.Status.RecentRepos),
