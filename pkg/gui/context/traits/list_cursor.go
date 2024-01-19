@@ -64,6 +64,23 @@ func (self *ListCursor) SetSelection(value int) {
 	self.CancelRangeSelect()
 }
 
+func (self *ListCursor) SetSelectionRangeAndMode(startIdx, endIdx int, mode RangeSelectMode) {
+	self.rangeStartIdx = self.clampValue(startIdx)
+	self.selectedIdx = self.clampValue(endIdx)
+	self.rangeSelectMode = mode
+}
+
+// Returns the start and end indices of the selection range, and the mode. Note
+// that unlike GetSelectionRange(), which sorts start and end, this one doesn't,
+// so start could be greater than end.
+func (self *ListCursor) GetSelectionRangeAndMode() (int, int, RangeSelectMode) {
+	if self.IsSelectingRange() {
+		return self.rangeStartIdx, self.selectedIdx, self.rangeSelectMode
+	} else {
+		return self.selectedIdx, self.selectedIdx, self.rangeSelectMode
+	}
+}
+
 func (self *ListCursor) clampValue(value int) int {
 	clampedValue := -1
 	if self.list.Len() > 0 {
